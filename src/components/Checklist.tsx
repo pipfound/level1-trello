@@ -2,7 +2,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { AddIcon, CheckIcon, CloseIcon, DeleteIcon, EditIcon, SmallAddIcon } from '@chakra-ui/icons';
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Heading, Input, Text, Editable, EditableInput, EditableTextarea,EditablePreview, useEditableControls, ButtonGroup, IconButton, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Checkbox } from '@chakra-ui/react'
 import { reverse } from 'dns';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 type TaskType = {
     id: number;
@@ -10,9 +10,9 @@ type TaskType = {
     description: string;
   }
 
-export default function Section({ title: sectionTitle }: { title: string }) {
-    const [valueTask, setValueTask] = useState('');
-    const [dataTask, setDataTask] = useState<{ title: string }[]>([])
+export default function Section({ setTasks, title: sectionTitle }: { setTasks: Dispatch<SetStateAction<{ title: string; todos: string[] }[]>>; title: string }) {
+    const [valueTask, setValueTask] = useState<string>('');
+    const [dataTask, setDataTask] = useState<{ todo: string; }[]>([])
     const [currentId, setCurrentId] = useState(-1);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -24,15 +24,31 @@ export default function Section({ title: sectionTitle }: { title: string }) {
     const addTask = () => {
       // unshift는 추가한 순서대로, push는 밑으로 쌓이게
       dataTask.unshift({
-        title: valueTask,
+        todo: valueTask,
       })
       setDataTask([...dataTask]);
-      console.log(dataTask);
-      setValueTask('')
+
+      setTasks((prev) => {
+        return [...prev.map((item) => {
+          if(item.title === title) {
+            return {
+              ...item,
+              title: item.title,
+              todos: [...item.todos, valueTask]
+            }
+          } else {
+            return {
+              ...item,
+            }
+          }
+        })]
+      })
+
+      setValueTask('');
     }
   
     const removeTask = (title:string) => {
-      const result = dataTask.filter(value => value.title !== title)
+      const result = dataTask.filter(value => value.todo !== title)
       setDataTask(result)
     }
   
@@ -45,12 +61,12 @@ export default function Section({ title: sectionTitle }: { title: string }) {
             <SmallAddIcon />
           </Button>
         </Box>
-        {dataTask.map((item) => (
-          <Box key={item.title}
+        {dataTask.map(({todo}) => (
+          <Box key={todo}
             display={'flex'} justifyContent={'space-between'} alignItems={'center'} padding={2} color="#000000">
             <Box display={'flex'} justifyContent={'flex-start'} alignItems={'center'}>
-            <Checkbox padding={1} />
-            <Text alignItems={'center'}>{item.title}</Text>
+            <Checkbox colorScheme="gray" padding={1} />
+            <Text alignItems={'center'}>{todo}</Text>
             </Box>
             <Button bgGradient={'linear(to-tl, #8843F2, #448DFB)'} justifyContent={'flex-end'} color="#000000" margin={1} onClick={() => removeTask(item.title)}>
               <DeleteIcon w={3} h={3} />
@@ -58,7 +74,6 @@ export default function Section({ title: sectionTitle }: { title: string }) {
           </Box>
         ))}
       </Box>
-      {  }
     </>
   )
 }

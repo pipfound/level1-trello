@@ -1,6 +1,7 @@
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Input, Text } from '@chakra-ui/react'
 import type { NextPage } from 'next'
 import { useState } from 'react'
+`import Section from '../src/components/Checklist'`
 import Section from '../src/components/Section'
 
 // []  => array 배열
