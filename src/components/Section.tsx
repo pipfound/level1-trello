@@ -1,9 +1,7 @@
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { AddIcon, CheckIcon, CloseIcon, DeleteIcon, EditIcon, HamburgerIcon, SmallAddIcon, SmallCloseIcon } from '@chakra-ui/icons';
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Heading, Input, Text, Editable, EditableInput, EditableTextarea,EditablePreview, useEditableControls, ButtonGroup, IconButton, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Checkbox } from '@chakra-ui/react'
 import { reverse } from 'dns';
 import { useEffect, useState } from 'react';
-import Checklist from '/Users/j/study/study02/src/components/Checklist'
 
 type TaskType = {
     id: number;
