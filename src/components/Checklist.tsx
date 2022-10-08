@@ -48,15 +48,17 @@ export default function Section({ setTasks, title: sectionTitle }: { setTasks: D
     }
   
     const removeTask = (title:string) => {
+      console.log(title);
+      console.log(dataTask);
       const result = dataTask.filter(value => value.todo !== title)
       setDataTask(result)
     }
   
   return (
     <>
-      <Box bg={'#FFFFFF'} flex={1} borderRadius={4} p={4} height={"max-content"} fontFamily={'KyoboHand'}>
+      <Box bg={'#FFFFFF'} flex={1} borderRadius={4} p={4} height={"max-content"} fontFamily={'KyoboHandwriting2020A'}>
         <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
-          <Input value={valueTask} onChange={(e) => setValueTask(e.currentTarget.value)} />
+          <Input value={valueTask} onChange={(e) => setValueTask(e.currentTarget.value)} placeholder='저장 안 되니까 외우세요.' />
           <Button onClick={addTask}>
             <SmallAddIcon />
           </Button>
@@ -68,7 +70,7 @@ export default function Section({ setTasks, title: sectionTitle }: { setTasks: D
             <Checkbox colorScheme="gray" padding={1} />
             <Text alignItems={'center'}>{todo}</Text>
             </Box>
-            <Button bgGradient={'linear(to-tl, #8843F2, #448DFB)'} justifyContent={'flex-end'} color="#000000" margin={1} onClick={() => removeTask(item.title)}>
+            <Button bgGradient={'linear(to-tl, #8843F2, #448DFB)'} justifyContent={'flex-end'} color="#000000" margin={1} onClick={() => removeTask(todo)}>
               <DeleteIcon w={3} h={3} />
             </Button>
           </Box>
